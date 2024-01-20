@@ -1,9 +1,15 @@
 package com.bakkopi.todoapi.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
+@Table(name = "TASK")
 public class Task {
     public enum TaskStatus { NOT_STARTED, IN_PROGRESS, COMPLETED }
 
@@ -22,6 +28,14 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToMany
+    @JoinTable(
+            name = "task_tags",
+            joinColumns = @JoinColumn(name = "task_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    private Set<Tag> tags = new HashSet<>();
 
     public Task() {}
     public Task(Long id, String taskName, String description, LocalDate dueDate, TaskStatus status, TaskPriority priority, User user) {
