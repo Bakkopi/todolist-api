@@ -23,12 +23,11 @@ public class TaskService {
         return taskRepository.findAll();
     }
 
-    public List<Task> getCurrentUserTasks(User user) {
-        User currentUser = userService.getCurrentUser();
-        return taskRepository.findByUser(user);
+    public List<Task> getCurrentUserTasks() {
+        return taskRepository.findByUser(userService.getCurrentUser());
     }
 
-    public Object getUserTasks(String username) {
+    public List<Task> getTasksByUsername(String username) {
         return taskRepository.findByUserUsername(username);
     }
 

@@ -1,6 +1,8 @@
 package com.bakkopi.todoapi.services;
 
+import com.bakkopi.todoapi.models.Tag;
 import com.bakkopi.todoapi.models.User;
+import com.bakkopi.todoapi.repositories.TagRepository;
 import com.bakkopi.todoapi.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,11 +15,8 @@ public class UserService {
     private UserRepository userRepository;
 
     public User getCurrentUser() {
-        return new User("","");
-    }
-
-    public User getUserByUsername(String username) {
-        return userRepository.findByUsername(username);
+//        return new User("","");
+        return new User("","","", User.Gender.MALE);
     }
 
     public List<User> getAllTasks() {

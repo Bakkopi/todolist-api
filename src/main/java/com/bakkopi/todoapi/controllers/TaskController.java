@@ -1,29 +1,35 @@
 package com.bakkopi.todoapi.controllers;
 
 import com.bakkopi.todoapi.models.Task;
+import com.bakkopi.todoapi.models.User;
 import com.bakkopi.todoapi.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/tasks")
+@RequestMapping("/api/tasks")
 public class TaskController {
 
     @Autowired
     private TaskService taskService;
 
+//    public ResponseEntity<List<Task>> getAllTasks(@RequestParam(required = false) String sortBy,
+//                                                  @RequestParam(required = false, defaultValue = "true") boolean sortAscend) {
     @GetMapping("/")
-    public ResponseEntity<List<Task>> getAllTasks() {
+    public ResponseEntity<List<Task>> getAllTasks(){
+        String[] validSortBy = {"dueDate", "status", "taskName"};
+        // send sortBy and sortAscend as parameters into getAllTasks
         return new ResponseEntity(taskService.getAllTasks(), HttpStatus.OK);
     }
 
-    @GetMapping("/{username}")
-    public ResponseEntity<List<Task>> getUserTasks(@PathVariable String username) {
-        return new ResponseEntity(taskService.getUserTasks(username), HttpStatus.OK);
+    @GetMapping("/{taskId}")
+    public ResponseEntity<List<Task>> getTaskById(@PathVariable Long taskId) {
+        return new ResponseEntity(taskService.getTaskById(taskId), HttpStatus.OK);
     }
 
     @PostMapping("/")
@@ -31,20 +37,15 @@ public class TaskController {
         return new ResponseEntity(taskService.createNewTask(task), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<List<Task>> getTask(@PathVariable Long id) {
-        return new ResponseEntity(taskService.getTaskById(id), HttpStatus.OK);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task task) {
-        task.setId(id);
+    @PutMapping("/{taskId}")
+    public ResponseEntity<Task> updateTask(@PathVariable Long taskId, @RequestBody Task task) {
+        task.setId(taskId);
         return new ResponseEntity(taskService.updateTask(task), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Boolean> deleteTask(@PathVariable Long id) {
-        taskService.deleteTask(id);
+    @DeleteMapping("/{taskId}")
+    public ResponseEntity<Boolean> deleteTask(@PathVariable Long taskId) {
+        taskService.deleteTask(taskId);
         return new ResponseEntity(true, HttpStatus.OK);
     }
 }
