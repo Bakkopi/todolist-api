@@ -32,7 +32,7 @@ It provides CRUD operations, search filtering and sorting, user-associated tasks
 5. Build and run the project using your Java IDE of choice (IntelliJ IDEA recommended)
 
 6. Populate tables with dummy data by running the [`dummyData.sql`](dummyData.sql) script on MySQL CLI.
-   ```sql
+   ```bash
    mysql> USE todolist;
    mysql> source {Absolute path to dummyData.sql}
    ```
