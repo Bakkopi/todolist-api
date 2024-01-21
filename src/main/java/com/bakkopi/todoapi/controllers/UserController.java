@@ -21,7 +21,7 @@ public class UserController {
     @Autowired
     private TaskService taskService;
 
-    @GetMapping("/")
+    @GetMapping
     public List<User> getAllUsers() {
         return userService.getAllTasks();
     }
@@ -51,7 +51,7 @@ public class UserController {
 //        return new ResponseEntity(tagService.getTagsByUsername(username), HttpStatus.OK);
 //    }
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<User> createUser(@RequestBody User user) {
         return new ResponseEntity(userService.createNewUser(user), HttpStatus.OK);
     }

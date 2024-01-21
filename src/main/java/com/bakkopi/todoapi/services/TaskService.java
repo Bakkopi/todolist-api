@@ -1,5 +1,6 @@
 package com.bakkopi.todoapi.services;
 
+import com.bakkopi.todoapi.models.Tag;
 import com.bakkopi.todoapi.models.Task;
 import com.bakkopi.todoapi.models.User;
 import com.bakkopi.todoapi.repositories.TaskRepository;
@@ -14,10 +15,19 @@ public class TaskService {
     private TaskRepository taskRepository;
     @Autowired
     private UserService userService;
+    @Autowired
+    private TagService tagService;
 
     public Task createNewTask(Task task) {
         // Fetch User with the given User ID
         task.setUser(userService.getUserById(task.getUser().getId()));
+        return taskRepository.save(task);
+    }
+
+    public Task addTagToTask(Long taskId, Tag tag) {
+        Tag existingTag = tagService.getTagById(tag.getId());
+        Task task = getTaskById(taskId);
+        task.getTags().add(existingTag);
         return taskRepository.save(task);
     }
 
@@ -44,6 +54,4 @@ public class TaskService {
     public Task updateTask(Task task) {
         return taskRepository.save(task);
     }
-
-
 }

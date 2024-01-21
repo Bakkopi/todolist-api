@@ -1,5 +1,6 @@
 package com.bakkopi.todoapi.controllers;
 
+import com.bakkopi.todoapi.models.Tag;
 import com.bakkopi.todoapi.models.Task;
 import com.bakkopi.todoapi.models.User;
 import com.bakkopi.todoapi.services.TaskService;
@@ -19,7 +20,7 @@ public class TaskController {
     @Autowired
     private TaskService taskService;
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<List<Task>> getAllTasks(@RequestParam(required = false) String sortBy,
                                                   @RequestParam(required = false, defaultValue = "true") boolean sortAscend) {
         // TODO: Implement filter using JPA Specification
@@ -33,9 +34,14 @@ public class TaskController {
         return new ResponseEntity(taskService.getTaskById(taskId), HttpStatus.OK);
     }
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<Task> createTask(@RequestBody Task task) {
         return new ResponseEntity(taskService.createNewTask(task), HttpStatus.OK);
+    }
+
+    @PostMapping("/{taskId}/tags")
+    public ResponseEntity<Task> addTagToTask(@PathVariable Long taskId, @RequestBody Tag tag) {
+        return new ResponseEntity(taskService.addTagToTask(taskId, tag), HttpStatus.OK);
     }
 
     @PutMapping("/{taskId}")

@@ -17,7 +17,7 @@ public class TagController {
     @Autowired
     private TagService tagService;
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<List<Tag>> getAllTags() {
         return new ResponseEntity(tagService.getAllTags(), HttpStatus.OK);
     }
@@ -27,7 +27,7 @@ public class TagController {
         return new ResponseEntity(tagService.getTagById(tagId), HttpStatus.OK);
     }
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<Tag> createTag(@RequestBody Tag tag) {
         return new ResponseEntity(tagService.createNewTag(tag), HttpStatus.OK);
     }
