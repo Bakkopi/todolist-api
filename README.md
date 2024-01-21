@@ -1,6 +1,8 @@
-# Todo List API (Spring Boot)
+# Spring Boot Todo List API
 
-This is a simple Spring Boot application for managing a todo list. The application provides CRUD operations, search filtering and sorting, user-associated tasks, and tagging functionalities. 
+This is a simple Spring Boot application for managing a todo list. 
+
+The application provides CRUD operations, search filtering and sorting, user-associated tasks, and tagging functionalities. 
 
 ## Dependencies
 
@@ -15,9 +17,13 @@ This is a simple Spring Boot application for managing a todo list. The applicati
     ```bash
     git clone https://github.com/Bakkopi/todolist-api
    ```
+
 2. Ensure MySQL is installed and setup. Instructions are provided [here](https://www.javatpoint.com/how-to-install-mysql).
-3. Create a new `.env` file in the `src/main/resources` folder. 
+
+3. Create a new `.env` file in the `src/main/resources` folder.
+
 4. Assign your MySQL user login credentials in the `.env` file (Refer to [`.env.example`](src/main/resources/.env.example) for the template)
+   <br><br>
    ```bash
    MYSQLDB_DBNAME = "todolist"
    MYSQLDB_USERNAME = "root"
@@ -25,12 +31,13 @@ This is a simple Spring Boot application for managing a todo list. The applicati
    ```   
 5. Build and run the project using your Java IDE of choice (IntelliJ IDEA recommended)
 6. Populate tables with dummy data by running the [`dummyData.sql`](dummyData.sql) script on MySQL CLI.
+   <br><br>
    ```sql
    mysql> USE todolist;
    mysql> source {Absolute path to dummyData.sql}
    ```
    
-The application will be accessible at [http://localhost:8080](http://localhost:8080). 
+   The application will be accessible at [http://localhost:8080](http://localhost:8080). 
 
 ## Usage
 
