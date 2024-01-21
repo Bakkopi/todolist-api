@@ -31,4 +31,8 @@ public class TagService {
     public List<Tag> getTagsByUsername(String username) {
         return tagRepository.findByUserUsername(username);
     }
+
+    public Tag getTagById(Long tagId) {
+        return tagRepository.findById(tagId).get();
+    }
 }

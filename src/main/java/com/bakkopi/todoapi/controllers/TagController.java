@@ -18,17 +18,17 @@ public class TagController {
     private TagService tagService;
 
     @GetMapping("/")
-    public List<Tag> getAllTags() {
-        return tagService.getAllTags();
+    public ResponseEntity<List<Tag>> getAllTags() {
+        return new ResponseEntity(tagService.getAllTags(), HttpStatus.OK);
     }
 
     @GetMapping("/{tagId}")
-    public List<Tag> getAllTags(@PathVariable String tagId) {
-        return tagService.getAllTags();
+    public ResponseEntity<List<Tag>> getTagById(@PathVariable Long tagId) {
+        return new ResponseEntity(tagService.getTagById(tagId), HttpStatus.OK);
     }
 
     @PostMapping("/")
-    public ResponseEntity<Task> createTag(@RequestBody Tag tag) {
+    public ResponseEntity<Tag> createTag(@RequestBody Tag tag) {
         return new ResponseEntity(tagService.createNewTag(tag), HttpStatus.OK);
     }
 

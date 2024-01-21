@@ -18,10 +18,9 @@ public class TaskController {
     @Autowired
     private TaskService taskService;
 
-//    public ResponseEntity<List<Task>> getAllTasks(@RequestParam(required = false) String sortBy,
-//                                                  @RequestParam(required = false, defaultValue = "true") boolean sortAscend) {
     @GetMapping("/")
-    public ResponseEntity<List<Task>> getAllTasks(){
+    public ResponseEntity<List<Task>> getAllTasks(@RequestParam(required = false) String sortBy,
+                                                  @RequestParam(required = false, defaultValue = "true") boolean sortAscend) {
         String[] validSortBy = {"dueDate", "status", "taskName"};
         // send sortBy and sortAscend as parameters into getAllTasks
         return new ResponseEntity(taskService.getAllTasks(), HttpStatus.OK);

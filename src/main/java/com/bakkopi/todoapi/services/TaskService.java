@@ -32,7 +32,7 @@ public class TaskService {
     }
 
     public Task getTaskById(Long id) {
-        return taskRepository.getReferenceById(id);
+        return taskRepository.findById(id).get();
     }
 
     public void deleteTask(Long id) {
