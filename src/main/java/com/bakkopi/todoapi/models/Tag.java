@@ -25,7 +25,8 @@ public class Tag {
 //    private User user;
 
     @ManyToMany(mappedBy = "tags", fetch = FetchType.LAZY)
-    @JsonBackReference("task_tag")
+//    @JsonBackReference("task_tag")
+    @JsonIgnore
     private Set<Task> tasks = new HashSet<>();
 
     public Tag() {};

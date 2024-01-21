@@ -43,4 +43,8 @@ public class TagService {
     public void deleteTag(Long tagId) {
         tagRepository.deleteById(tagId);
     }
+
+    public Tag getTagByName(String tagName) {
+        return tagRepository.findByName(tagName);
+    }
 }

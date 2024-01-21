@@ -3,15 +3,20 @@ package com.bakkopi.todoapi.controllers;
 import com.bakkopi.todoapi.models.Tag;
 import com.bakkopi.todoapi.models.Task;
 import com.bakkopi.todoapi.models.User;
+import com.bakkopi.todoapi.services.TagService;
 import com.bakkopi.todoapi.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/tasks")
@@ -19,14 +24,25 @@ public class TaskController {
 
     @Autowired
     private TaskService taskService;
+    @Autowired
+    private TagService tagService;
 
     @GetMapping
-    public ResponseEntity<List<Task>> getAllTasks(@RequestParam(required = false) String sortBy,
-                                                  @RequestParam(required = false, defaultValue = "true") boolean sortAscend) {
-        // TODO: Implement filter using JPA Specification
-        String[] validSortBy = {"dueDate", "status", "taskName"};
-        // send sortBy and sortAscend as parameters into getAllTasks
+    public ResponseEntity<List<Task>> getAllTasks() {
         return new ResponseEntity(taskService.getAllTasks(), HttpStatus.OK);
+    }
+
+    @GetMapping("/condition")
+    public ResponseEntity<List<Task>> getTasksByCondition(@RequestParam(required = false) Set<String> tags,
+                                                             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dueDate,
+                                                             @RequestParam(required = false) Task.TaskStatus status,
+                                                             @RequestParam(required = false) String sortBy,
+                                                             @RequestParam(required = false, defaultValue = "true") boolean sortAscend) {
+        // TODO: Implement filter using JPA Specification
+        Set<Tag> tagSet =
+                tags != null ?
+                tags.stream().map(tagName -> tagService.getTagByName(tagName)).collect(Collectors.toSet()) : null;
+        return new ResponseEntity(taskService.getTasksByCondition(tagSet, dueDate, status, sortBy, sortAscend), HttpStatus.OK);
     }
 
     @GetMapping("/{taskId}")
