@@ -16,6 +16,8 @@ public class TaskService {
     private UserService userService;
 
     public Task createNewTask(Task task) {
+        // Fetch User with the given User ID
+        task.setUser(userService.getUserById(task.getUser().getId()));
         return taskRepository.save(task);
     }
 

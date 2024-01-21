@@ -5,6 +5,7 @@ import com.bakkopi.todoapi.models.User;
 import com.bakkopi.todoapi.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +22,7 @@ public class TaskController {
     @GetMapping("/")
     public ResponseEntity<List<Task>> getAllTasks(@RequestParam(required = false) String sortBy,
                                                   @RequestParam(required = false, defaultValue = "true") boolean sortAscend) {
+        // TODO: Implement filter using JPA Specification
         String[] validSortBy = {"dueDate", "status", "taskName"};
         // send sortBy and sortAscend as parameters into getAllTasks
         return new ResponseEntity(taskService.getAllTasks(), HttpStatus.OK);

@@ -2,6 +2,7 @@ package com.bakkopi.todoapi.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -22,12 +23,16 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    // OneToMany - tags is not a column in User table
-    // mappedBy - indicates the column in Tag table where User ID is an FK
-    // cascade - propagate actions from User to Tag (e.g. User deleted, tags also deleted)
+    // OneToMany - tasks is not a column in User table
+    // mappedBy - indicates the column in Task table where User ID is an FK
+    // cascade - propagate actions from User to Task (e.g. User deleted, tasks also deleted)
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonBackReference  // Prevent infinite recursion w/ Tag
-    private Set<Tag> tags;
+//    @JsonBackReference("task_user")
+    private Set<Task> tasks = new HashSet<>();
+
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+//    @JsonBackReference("tag_user")  // Prevent infinite recursion w/ Tag
+//    private Set<Tag> tags = new HashSet<>();
 
     public User() {}
 
@@ -36,7 +41,6 @@ public class User {
         this.password = password;
         this.address = address;
         this.gender = gender;
-        this.tags = new HashSet<>();
     }
 
     public Long getId() {
@@ -53,14 +57,6 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public Set<Tag> getTags() {
-        return tags;
-    }
-
-    public void setTags(Set<Tag> tags) {
-        this.tags = tags;
     }
 
     public String getPassword() {

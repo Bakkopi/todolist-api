@@ -19,20 +19,28 @@ public class TagService {
         return tagRepository.findAll();
     }
 
-    public List<Tag> getUserTags(User user) {
-        return tagRepository.findByUser(user);
-    }
+//    public List<Tag> getUserTags(User user) {
+//        return tagRepository.findByUser(user);
+//    }
 
     public Tag createNewTag(Tag tag) {
 //        tag.setUser(userService.getCurrentUser());
         return tagRepository.save(tag);
     }
 
-    public List<Tag> getTagsByUsername(String username) {
-        return tagRepository.findByUserUsername(username);
-    }
+//    public List<Tag> getTagsByUsername(String username) {
+//        return tagRepository.findByUserUsername(username);
+//    }
 
     public Tag getTagById(Long tagId) {
         return tagRepository.findById(tagId).get();
+    }
+
+    public Tag updateTag(Tag tag) {
+        return tagRepository.save(tag);
+    }
+
+    public void deleteTag(Long tagId) {
+        tagRepository.deleteById(tagId);
     }
 }

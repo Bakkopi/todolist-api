@@ -20,8 +20,6 @@ public class UserController {
     private UserService userService;
     @Autowired
     private TaskService taskService;
-    @Autowired
-    private TagService tagService;
 
     @GetMapping("/")
     public List<User> getAllUsers() {
@@ -33,10 +31,10 @@ public class UserController {
         return userService.getCurrentUser();
     }
 
-    @GetMapping("/me/tags")
-    public List<Tag> getCurrentUserTags() {
-        return tagService.getUserTags(getCurrentUser());
-    }
+//    @GetMapping("/me/tags")
+//    public List<Tag> getCurrentUserTags() {
+//        return tagService.getUserTags(getCurrentUser());
+//    }
 
     @GetMapping("/me/tasks")
     public ResponseEntity<List<Task>> getCurrentUserTasks() {
@@ -48,25 +46,25 @@ public class UserController {
         return new ResponseEntity(taskService.getTasksByUsername(username), HttpStatus.OK);
     }
 
-    @GetMapping("/{username}/tags")
-    public ResponseEntity<List<Tag>> getTagsByUsername(@PathVariable String username) {
-        return new ResponseEntity(tagService.getTagsByUsername(username), HttpStatus.OK);
-    }
+//    @GetMapping("/{username}/tags")
+//    public ResponseEntity<List<Tag>> getTagsByUsername(@PathVariable String username) {
+//        return new ResponseEntity(tagService.getTagsByUsername(username), HttpStatus.OK);
+//    }
 
     @PostMapping("/")
-    public ResponseEntity<Tag> createTag(@RequestBody Task task) {
-        return new ResponseEntity(taskService.createNewTask(task), HttpStatus.OK);
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        return new ResponseEntity(userService.createNewUser(user), HttpStatus.OK);
     }
 
-    @PutMapping("/{taskId}")
-    public ResponseEntity<Task> updateTask(@PathVariable Long taskId, @RequestBody Task task) {
-        task.setId(taskId);
-        return new ResponseEntity(taskService.updateTask(task), HttpStatus.OK);
+    @PutMapping("/{userId}")
+    public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody User user) {
+        user.setId(userId);
+        return new ResponseEntity(userService.updateUser(user), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{taskId}")
-    public ResponseEntity<Boolean> deleteTask(@PathVariable Long taskId) {
-        taskService.deleteTask(taskId);
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<Boolean> deleteUser(@PathVariable Long userId) {
+        userService.deleteUser(userId);
         return new ResponseEntity(true, HttpStatus.OK);
     }
 }

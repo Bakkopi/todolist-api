@@ -32,4 +32,16 @@ public class TagController {
         return new ResponseEntity(tagService.createNewTag(tag), HttpStatus.OK);
     }
 
+    @PutMapping("/{tagId}")
+    public ResponseEntity<Tag> updateTag(@PathVariable Long tagId, @RequestBody Tag tag) {
+        tag.setId(tagId);
+        return new ResponseEntity(tagService.updateTag(tag), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{tagId}")
+    public ResponseEntity<Boolean> deleteTag(@PathVariable Long tagId) {
+        tagService.deleteTag(tagId);
+        return new ResponseEntity(true, HttpStatus.OK);
+    }
+
 }

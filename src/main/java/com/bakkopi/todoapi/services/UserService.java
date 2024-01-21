@@ -22,4 +22,20 @@ public class UserService {
     public List<User> getAllTasks() {
         return userRepository.findAll();
     }
+
+    public User createNewUser(User user) {
+        return userRepository.save(user);
+    }
+
+    public User updateUser(User user) {
+        return userRepository.save(user);
+    }
+
+    public void deleteUser(Long userId) {
+        userRepository.deleteById(userId);
+    }
+
+    public User getUserById(Long userId) {
+        return userRepository.findById(userId).get();
+    }
 }

@@ -27,19 +27,20 @@ public class Task {
     private TaskPriority priority;
     @ManyToOne
     @JoinColumn(name = "user_id")
+//    @JsonManagedReference("task_user")
     private User user;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
-            name = "task_tags",
+            name = "TASK_TAGS",
             joinColumns = @JoinColumn(name = "task_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
+//    @JsonManagedReference("task_tag")
     private Set<Tag> tags = new HashSet<>();
 
     public Task() {}
-    public Task(Long id, String taskName, String description, LocalDate dueDate, TaskStatus status, TaskPriority priority, User user) {
-        this.id = id;
+    public Task(String taskName, String description, LocalDate dueDate, TaskStatus status, TaskPriority priority, User user) {
         this.taskName = taskName;
         this.description = description;
         this.dueDate = dueDate;

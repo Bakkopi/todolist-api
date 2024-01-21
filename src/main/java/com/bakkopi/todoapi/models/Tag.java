@@ -1,5 +1,6 @@
 package com.bakkopi.todoapi.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -15,15 +16,23 @@ public class Tag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @ManyToOne
-    @JsonManagedReference  // Prevent infinite recursion w/ User
-    @JoinColumn(name = "user_id")
-    private User user;
+    private String hexCode;
+
+//    TODO: Bring Tags to user-level (i.e. Each user has their own collection of Tags)
+//    @ManyToOne
+//    @JoinColumn(name = "user_id")
+//    @JsonManagedReference("tag_user")  // Prevent infinite recursion w/ User
+//    private User user;
+
+    @ManyToMany(mappedBy = "tags", fetch = FetchType.LAZY)
+//    @JsonBackReference("task_tag")
+    private Set<Task> tasks = new HashSet<>();
 
     public Tag() {};
-    public Tag(String name, User user) {
+
+    public Tag(String name, String hexCode) {
         this.name = name;
-        this.user = user;
+        this.hexCode = hexCode;
     }
 
     public Long getId() {
@@ -42,11 +51,19 @@ public class Tag {
         this.name = name;
     }
 
-    public User getUser() {
-        return user;
+    public String getHexCode() {
+        return hexCode;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setHexCode(String hexCode) {
+        this.hexCode = hexCode;
+    }
+
+    public Set<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(Set<Task> tasks) {
+        this.tasks = tasks;
     }
 }
