@@ -36,7 +36,7 @@ public class Task {
             joinColumns = @JoinColumn(name = "task_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
-//    @JsonManagedReference("task_tag")
+    @JsonManagedReference("task_tag")
     private Set<Tag> tags = new HashSet<>();
 
     public Task() {}
