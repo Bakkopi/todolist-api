@@ -39,6 +39,6 @@ It provides CRUD operations, search filtering and sorting, user-associated tasks
    
 ## Usage
 
-1. Ensure all setup steps have been followed and run the API application. (Accessible at [http://localhost:8080](http://localhost:8080)). 
+1. Ensure all setup steps have been followed and run the API application. ([http://localhost:8080](http://localhost:8080)). 
 2. Import the [Postman Collection](Todo List API.postman_collection.json) provided into your local Postman.
 3. Send and modify requests according to the templates provided. Have fun!
