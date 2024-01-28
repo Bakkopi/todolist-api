@@ -48,7 +48,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/tasks/condition?dueDate=2024-02-12&status=IN_PROGRESS&sortBy=dueDate&sortAscend=true&tags=Work,Personal",
+							"raw": "{{base_url}}/tasks/condition",
 							"host": [
 								"{{base_url}}"
 							],
@@ -59,23 +59,28 @@
 							"query": [
 								{
 									"key": "dueDate",
-									"value": "2024-02-12"
-								},
-								{
-									"key": "status",
-									"value": "IN_PROGRESS"
-								},
-								{
-									"key": "sortBy",
-									"value": "dueDate"
-								},
-								{
-									"key": "sortAscend",
-									"value": "true"
+									"value": "2024-02-12",
+									"disabled": true
 								},
 								{
 									"key": "tags",
-									"value": "Work,Personal"
+									"value": "Work,Personal",
+									"disabled": true
+								},
+								{
+									"key": "sortBy",
+									"value": "dueDate",
+									"disabled": true
+								},
+								{
+									"key": "sortAscend",
+									"value": "false",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "COMPLETED",
+									"disabled": true
 								}
 							]
 						}
@@ -142,7 +147,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\": 3\n}",
+							"raw": "{\n    \"id\": 3,\n    \"name\": \"Work\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -175,7 +180,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"taskName\": \"API Documentation\",   \n    \"description\": \"Write documentation for API endpoints\",\n    \"dueDate\": \"2024-03-01\",\n    \"priority\": \"HIGH\",\n    \"status\": \"COMPLETED\",\n    \"user\": { \"id\": 1 }\n}",
+							"raw": "{\n    \"taskName\": \"API Documentation\",   \n    \"description\": \"Write documentation for API endpoints\",\n    \"dueDate\": \"2024-03-10\",\n    \"priority\": \"HIGH\",\n    \"status\": \"COMPLETED\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
