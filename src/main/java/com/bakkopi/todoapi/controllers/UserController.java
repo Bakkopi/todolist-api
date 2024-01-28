@@ -6,6 +6,7 @@ import com.bakkopi.todoapi.models.User;
 import com.bakkopi.todoapi.services.TagService;
 import com.bakkopi.todoapi.services.TaskService;
 import com.bakkopi.todoapi.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,12 +53,12 @@ public class UserController {
 //    }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
+    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
         return new ResponseEntity(userService.createNewUser(user), HttpStatus.OK);
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody User user) {
+    public ResponseEntity<User> updateUser(@PathVariable Long userId, @Valid @RequestBody User user) {
         user.setId(userId);
         return new ResponseEntity(userService.updateUser(user), HttpStatus.OK);
     }

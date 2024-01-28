@@ -5,6 +5,7 @@ import com.bakkopi.todoapi.models.Task;
 import com.bakkopi.todoapi.models.User;
 import com.bakkopi.todoapi.services.TagService;
 import com.bakkopi.todoapi.services.TaskService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -36,8 +37,11 @@ public class TaskController {
     public ResponseEntity<List<Task>> getTasksByCondition(@RequestParam(required = false) Set<String> tags,
                                                              @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dueDate,
                                                              @RequestParam(required = false) Task.TaskStatus status,
-                                                             @RequestParam(required = false) String sortBy,
+                                                             @RequestParam(required = false, defaultValue = "dueDate") String sortBy,
                                                              @RequestParam(required = false, defaultValue = "true") boolean sortAscend) {
+
+        //
+
         // TODO: Implement filter using JPA Specification
         Set<Tag> tagSet =
                 tags != null ?
@@ -51,18 +55,21 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<Task> createTask(@RequestBody Task task) {
+    public ResponseEntity<Task> createTask(@Valid @RequestBody Task task) {
         return new ResponseEntity(taskService.createNewTask(task), HttpStatus.OK);
     }
 
     @PostMapping("/{taskId}/tags")
-    public ResponseEntity<Task> addTagToTask(@PathVariable Long taskId, @RequestBody Tag tag) {
+    public ResponseEntity<Task> addTagToTask(@PathVariable Long taskId, @Valid @RequestBody Tag tag) {
         return new ResponseEntity(taskService.addTagToTask(taskId, tag), HttpStatus.OK);
     }
 
     @PutMapping("/{taskId}")
-    public ResponseEntity<Task> updateTask(@PathVariable Long taskId, @RequestBody Task task) {
+    public ResponseEntity<Task> updateTask(@PathVariable Long taskId, @Valid @RequestBody Task task) {
         task.setId(taskId);
+        Task existingTask = taskService.getTaskById(taskId);
+        task.setTags(existingTask.getTags());
+        task.setUser(existingTask.getUser());
         return new ResponseEntity(taskService.updateTask(task), HttpStatus.OK);
     }
 

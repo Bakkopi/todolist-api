@@ -4,12 +4,15 @@ import com.bakkopi.todoapi.models.Tag;
 import com.bakkopi.todoapi.models.Task;
 import com.bakkopi.todoapi.models.User;
 import com.bakkopi.todoapi.repositories.TagRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 
 @Service
+@Validated
 public class TagService {
     @Autowired
     private TagRepository tagRepository;
@@ -23,7 +26,7 @@ public class TagService {
 //        return tagRepository.findByUser(user);
 //    }
 
-    public Tag createNewTag(Tag tag) {
+    public Tag createNewTag(@Valid Tag tag) {
 //        tag.setUser(userService.getCurrentUser());
         return tagRepository.save(tag);
     }
@@ -36,7 +39,7 @@ public class TagService {
         return tagRepository.findById(tagId).get();
     }
 
-    public Tag updateTag(Tag tag) {
+    public Tag updateTag(@Valid Tag tag) {
         return tagRepository.save(tag);
     }
 

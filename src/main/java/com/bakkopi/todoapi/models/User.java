@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +25,9 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank
     private String username;
+    @NotBlank
     private String password;
     private String address;
     @Enumerated(EnumType.STRING)
@@ -34,6 +38,7 @@ public class User {
     // cascade - propagate actions from User to Task (e.g. User deleted, tasks also deleted)
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 //    @JsonBackReference("task_user")
+    @JsonIgnore
     private Set<Task> tasks = new HashSet<>();
 
 //    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)

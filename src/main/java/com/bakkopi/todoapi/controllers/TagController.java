@@ -4,6 +4,7 @@ import com.bakkopi.todoapi.models.Tag;
 import com.bakkopi.todoapi.models.Task;
 import com.bakkopi.todoapi.services.TagService;
 import com.bakkopi.todoapi.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,12 +29,12 @@ public class TagController {
     }
 
     @PostMapping
-    public ResponseEntity<Tag> createTag(@RequestBody Tag tag) {
+    public ResponseEntity<Tag> createTag(@Valid @RequestBody Tag tag) {
         return new ResponseEntity(tagService.createNewTag(tag), HttpStatus.OK);
     }
 
     @PutMapping("/{tagId}")
-    public ResponseEntity<Tag> updateTag(@PathVariable Long tagId, @RequestBody Tag tag) {
+    public ResponseEntity<Tag> updateTag(@PathVariable Long tagId, @Valid @RequestBody Tag tag) {
         tag.setId(tagId);
         return new ResponseEntity(tagService.updateTag(tag), HttpStatus.OK);
     }

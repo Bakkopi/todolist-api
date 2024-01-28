@@ -5,15 +5,18 @@ import com.bakkopi.todoapi.models.Task;
 import com.bakkopi.todoapi.models.Task.TaskStatus;
 import com.bakkopi.todoapi.models.User;
 import com.bakkopi.todoapi.repositories.TaskRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
 @Service
+@Validated
 public class TaskService {
     @Autowired
     private TaskRepository taskRepository;
@@ -22,13 +25,13 @@ public class TaskService {
     @Autowired
     private TagService tagService;
 
-    public Task createNewTask(Task task) {
+    public Task createNewTask(@Valid Task task) {
         // Fetch User with the given User ID
         task.setUser(userService.getUserById(task.getUser().getId()));
         return taskRepository.save(task);
     }
 
-    public Task addTagToTask(Long taskId, Tag tag) {
+    public Task addTagToTask(Long taskId, @Valid Tag tag) {
         Tag existingTag = tagService.getTagById(tag.getId());
         Task task = getTaskById(taskId);
         task.getTags().add(existingTag);
