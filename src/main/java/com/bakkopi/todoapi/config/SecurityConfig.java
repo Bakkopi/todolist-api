@@ -10,9 +10,8 @@
 //import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 //import org.springframework.security.web.SecurityFilterChain;
 //
-//// SOURCES:
-//// - https://youtu.be/b9O9NI-RJ3o?si=HaWS3rt7QznqQXfn
-//// - https://spring.io/guides/gs/securing-web/
+//// REF1: https://youtu.be/b9O9NI-RJ3o?si=HaWS3rt7QznqQXfn
+//// REF2: https://spring.io/guides/gs/securing-web/
 //
 //@EnableWebFluxSecurity
 //public class SecurityConfig {
