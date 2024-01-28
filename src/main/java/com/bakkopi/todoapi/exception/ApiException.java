@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 
 import java.time.ZonedDateTime;
 
+// Template for exception response body
 @Data
 @AllArgsConstructor
 public class ApiException {

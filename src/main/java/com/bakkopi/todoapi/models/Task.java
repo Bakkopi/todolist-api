@@ -21,7 +21,6 @@ import java.util.Set;
 @NoArgsConstructor
 public class Task {
     public enum TaskStatus { NOT_STARTED, IN_PROGRESS, COMPLETED }
-
     public enum TaskPriority { LOW, MEDIUM, HIGH }
 
     @Id
@@ -40,7 +39,7 @@ public class Task {
 //    @JsonManagedReference("task_user")
     private User user;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "TASK_TAGS",
             joinColumns = @JoinColumn(name = "task_id"),

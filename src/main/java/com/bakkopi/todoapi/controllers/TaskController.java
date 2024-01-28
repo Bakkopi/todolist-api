@@ -1,7 +1,9 @@
 package com.bakkopi.todoapi.controllers;
 
+import com.bakkopi.todoapi.exception.ApiRequestException;
 import com.bakkopi.todoapi.models.Tag;
 import com.bakkopi.todoapi.models.Task;
+import com.bakkopi.todoapi.models.Task.TaskStatus;
 import com.bakkopi.todoapi.models.User;
 import com.bakkopi.todoapi.services.TagService;
 import com.bakkopi.todoapi.services.TaskService;
@@ -13,7 +15,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLOutput;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -35,12 +40,44 @@ public class TaskController {
 
     @GetMapping("/condition")
     public ResponseEntity<List<Task>> getTasksByCondition(@RequestParam(required = false) Set<String> tags,
-                                                             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dueDate,
-                                                             @RequestParam(required = false) Task.TaskStatus status,
+                                                             @RequestParam(value = "dueDate", required = false) String dueDateString,
+                                                             @RequestParam(value = "status", required = false) String statusString,
                                                              @RequestParam(required = false, defaultValue = "dueDate") String sortBy,
                                                              @RequestParam(required = false, defaultValue = "true") boolean sortAscend) {
+        // Objects
+        TaskStatus status = null;
+        LocalDate dueDate = null;
 
-        //
+        // ----- GET parameters checking -----
+        List<String> validTags = tagService.getAllTagNames();
+        List<String> validStatuses = Arrays.stream(Task.TaskStatus.values()).map(Enum::name).toList(); // Enum to String list
+        List<String> validSortBy = Arrays.asList("duedate", "tags", "status");
+        String isoDateRegex = "^\\d{4}\\-(0[1-9]|1[012])\\-(0[1-9]|[12][0-9]|3[01])$";
+
+        if (dueDateString != null) {
+            if (dueDateString.matches(isoDateRegex)) {
+                dueDate = LocalDate.parse(dueDateString);
+            } else {
+                throw new ApiRequestException("Invalid date format (Must be yyyy-MM-dd)");
+            }
+        }
+        if (tags != null) {
+            if (!validTags.containsAll(tags)) {
+                throw new ApiRequestException("Invalid tag name(s)");
+            }
+        }
+        if(statusString != null) {
+            if (validStatuses.contains(statusString)) {
+                status = TaskStatus.valueOf(statusString.toUpperCase());
+            } else {
+                throw new ApiRequestException("Invalid status. Only allows for " + validStatuses);
+            }
+        }
+        if (sortBy != null) {
+            if (!validSortBy.contains(sortBy.toLowerCase())) {
+                throw new ApiRequestException("Invalid sortBy option");
+            }
+        }
 
         // TODO: Implement filter using JPA Specification
         Set<Tag> tagSet =

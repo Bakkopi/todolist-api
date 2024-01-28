@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Validated
@@ -20,6 +21,9 @@ public class TagService {
     private UserService userService;
     public List<Tag> getAllTags() {
         return tagRepository.findAll();
+    }
+    public List<String> getAllTagNames() {
+        return tagRepository.findAllTagNames();
     }
 
 //    public List<Tag> getUserTags(User user) {
